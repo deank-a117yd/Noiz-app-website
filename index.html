@@ -47,7 +47,7 @@
       --text-muted: rgba(255, 255, 255, 0.3);
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; background-color: var(--bg-deep); }
 
     body {
       background-color: var(--bg-deep);
@@ -56,6 +56,7 @@
       font-weight: 400;
       line-height: 1.7;
       overflow-x: hidden;
+      overscroll-behavior-y: none;
     }
 
     /* Grain overlay */
@@ -283,8 +284,10 @@
       transition: opacity 0.18s ease;
     }
 
-    .hero-cta:hover .cta-text {
-      opacity: 0;
+    @media (hover: hover) {
+      .hero-cta:hover .cta-text {
+        opacity: 0;
+      }
     }
 
     /* Arrow tracks cursor — position set by JS */
@@ -302,9 +305,11 @@
       transition: opacity 0.18s ease;
     }
 
-    .hero-cta:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 28px rgba(253, 218, 92, 0.2);
+    @media (hover: hover) {
+      .hero-cta:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 28px rgba(253, 218, 92, 0.2);
+      }
     }
 
     .hero-cta:active {
