@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
   <title>NOIZ — Privacy Policy</title>
   <style>
     @font-face {
@@ -99,6 +100,8 @@
       text-decoration: none;
       position: relative;
       transition: color 0.22s ease;
+      touch-action: manipulation;
+      padding: 8px 0;
     }
 
     .nav-links a::after {
@@ -112,8 +115,10 @@
       transition: width 0.22s ease;
     }
 
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover,
+    .nav-links a:focus { color: var(--text); }
+    .nav-links a:hover::after,
+    .nav-links a:focus::after { width: 100%; }
 
     /* ── PAGE BG ── */
     .page-bg {
@@ -282,9 +287,12 @@
       text-decoration: none;
       letter-spacing: 0.03em;
       transition: color 0.2s ease;
+      padding: 8px 4px;
+      touch-action: manipulation;
     }
 
-    .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+    .footer-legal a:hover,
+    .footer-legal a:focus { color: rgba(255,255,255,0.6); }
 
     .footer-sep {
       color: rgba(255,255,255,0.12);
