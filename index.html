@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOIZ — Rate. Connect. Discover.</title>
+  <style>
+    @font-face {
+      font-family: 'Archivo Black';
+      src: url('./Fonts/Hero-Archivo-Black.ttf') format('truetype');
+      font-weight: 900;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Archivo';
+      src: url('./Fonts/Archivo-SemiBold.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Archivo';
+      src: url('./Fonts/Archivo-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #0D0618;
+      --bg-purple: #38155C;
+      --accent: #FDDA5C;
+      --text: #FFFFFF;
+      --text-dim: rgba(255, 255, 255, 0.6);
+      --text-muted: rgba(255, 255, 255, 0.3);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Archivo', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.035;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 52px;
+      background: rgba(13, 6, 24, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .nav-logo {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 44px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.22s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.22s ease;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 32px 80px;
+      overflow: hidden;
+    }
+
+    /* Deep background gradient layers */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(56, 21, 92, 0.55) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 35% at 75% 25%, rgba(56, 21, 92, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 25% at 20% 80%, rgba(56, 21, 92, 0.2) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ── 3D CUBE ── */
+    .cube-wrapper {
+      position: relative;
+      margin-bottom: 52px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.34, 1.4, 0.64, 1) 0.15s forwards;
+    }
+
+    .cube-scene {
+      perspective: 1000px;
+      width: 220px;
+      height: 220px;
+    }
+
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spinCube 18s linear infinite;
+    }
+
+    @keyframes spinCube {
+      from { transform: rotateX(15deg) rotateY(0deg); }
+      to   { transform: rotateX(15deg) rotateY(360deg); }
+    }
+
+    .face {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(253, 218, 92, 0.1);
+    }
+
+    .face-front {
+      transform: translateZ(110px);
+      background: radial-gradient(circle at 42% 38%, #4d1f82 0%, #200b42 100%);
+    }
+    .face-back {
+      transform: rotateY(180deg) translateZ(110px);
+      background: radial-gradient(circle at 58% 62%, #3c1769 0%, #180834 100%);
+    }
+    .face-left {
+      transform: rotateY(-90deg) translateZ(110px);
+      background: radial-gradient(circle at 50% 35%, #411a70 0%, #1b0938 100%);
+    }
+    .face-right {
+      transform: rotateY(90deg) translateZ(110px);
+      background: radial-gradient(circle at 50% 65%, #451d78 0%, #1d0a3c 100%);
+    }
+    .face-top {
+      transform: rotateX(90deg) translateZ(110px);
+      background: linear-gradient(145deg, #3e1a6e, #1b0935);
+    }
+    .face-bottom {
+      transform: rotateX(-90deg) translateZ(110px);
+      background: linear-gradient(145deg, #160730, #0d0618);
+    }
+
+    .face img {
+      width: 54%;
+      height: auto;
+      filter: drop-shadow(0 0 18px rgba(253, 218, 92, 0.45));
+    }
+
+    /* Ground glow under cube */
+    .cube-shadow {
+      width: 140px;
+      height: 14px;
+      background: rgba(56, 21, 92, 0.7);
+      filter: blur(18px);
+      border-radius: 50%;
+      margin-top: 4px;
+    }
+
+    /* ── HERO TEXT ── */
+    .hero-headline {
+      font-family: 'Archivo Black', sans-serif;
+      font-weight: 900;
+      font-size: clamp(56px, 9vw, 96px);
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.34, 1.4, 0.64, 1) 0.65s forwards;
+    }
+
+    .hero-descriptor {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.34, 1.4, 0.64, 1) 0.85s forwards;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Archivo', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #0D0618;
+      background: var(--accent);
+      padding: 15px 42px;
+      border-radius: 100px;
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.34, 1.4, 0.64, 1) 1.05s forwards;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta-text {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      transition: opacity 0.18s ease;
+    }
+
+    .hero-cta:hover .cta-text {
+      opacity: 0;
+    }
+
+    /* Arrow tracks cursor — position set by JS */
+    .cta-arrow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateX(0px);
+      opacity: 0;
+      color: #0D0618;
+      pointer-events: none;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      transition: opacity 0.18s ease;
+    }
+
+    .hero-cta:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 28px rgba(253, 218, 92, 0.2);
+    }
+
+    .hero-cta:active {
+      transform: scale(0.97);
+    }
+
+    /* Scroll indicator — cascading yellow chevrons */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: fadeIn 1s ease 1.6s forwards;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .scroll-chev {
+      width: 14px;
+      height: 8px;
+      color: var(--accent);
+      display: block;
+      opacity: 0;
+      animation: chevCascade 2s ease-in-out infinite;
+    }
+
+    .scroll-chev:nth-child(1) { animation-delay: 0s; }
+    .scroll-chev:nth-child(2) { animation-delay: 0.26s; }
+    .scroll-chev:nth-child(3) { animation-delay: 0.52s; }
+
+    @keyframes chevCascade {
+      0%   { opacity: 0;   transform: translateY(-2px); }
+      35%  { opacity: 0.8; transform: translateY(0);    }
+      65%  { opacity: 0.8; transform: translateY(0);    }
+      100% { opacity: 0;   transform: translateY(2px);  }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── APP SHOWCASE ── */
+    .showcase {
+      padding: 128px 48px 120px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-tag {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .showcase-headline {
+      font-family: 'Archivo Black', sans-serif;
+      font-weight: 900;
+      font-size: clamp(36px, 5.5vw, 60px);
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 80px;
+      color: var(--text);
+    }
+
+    .phones {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .phone-wrap {
+      position: relative;
+    }
+
+    .phone-wrap img {
+      display: block;
+    }
+
+    .phone-wrap.primary img {
+      width: 300px;
+    }
+
+    /* Reveal states */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+
+    .reveal.delay-1 { transition-delay: 0.1s; }
+    .reveal.delay-2 { transition-delay: 0.22s; }
+    .reveal.delay-3 { transition-delay: 0.1s; }
+    .reveal.delay-4 { transition-delay: 0.26s; }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 36px 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    .footer-legal {
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-legal a {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.2s ease;
+    }
+
+    .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+    .footer-sep {
+      color: rgba(255,255,255,0.12);
+      margin: 0 14px;
+      font-size: 12px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 28px; }
+
+      .hero-headline { font-size: clamp(44px, 13vw, 72px); }
+
+      .cube-scene { width: 180px; height: 180px; }
+      .face { width: 180px; height: 180px; }
+      .face-front  { transform: translateZ(90px); }
+      .face-back   { transform: rotateY(180deg) translateZ(90px); }
+      .face-left   { transform: rotateY(-90deg) translateZ(90px); }
+      .face-right  { transform: rotateY(90deg) translateZ(90px); }
+      .face-top    { transform: rotateX(90deg) translateZ(90px); }
+      .face-bottom { transform: rotateX(-90deg) translateZ(90px); }
+
+      .showcase { padding: 80px 24px; }
+
+      footer {
+        padding: 28px 24px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html">
+      <img class="nav-logo" src="./Noiz Horizontal Yellow@300x (3).png" alt="NOIZ">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+
+    <div class="cube-wrapper">
+      <div class="cube-scene">
+        <div class="cube">
+          <div class="face face-front">
+            <img src="./Logo_Plain_N%20Yellow%40300x%20(1).png" alt="NOIZ">
+          </div>
+          <div class="face face-back">
+            <img src="./Logo_Plain_N%20Yellow%40300x%20(1).png" alt="NOIZ">
+          </div>
+          <div class="face face-left">
+            <img src="./Logo_Plain_N%20Yellow%40300x%20(1).png" alt="NOIZ">
+          </div>
+          <div class="face face-right">
+            <img src="./Logo_Plain_N%20Yellow%40300x%20(1).png" alt="NOIZ">
+          </div>
+          <div class="face face-top"></div>
+          <div class="face face-bottom"></div>
+        </div>
+      </div>
+      <div class="cube-shadow"></div>
+    </div>
+
+    <h1 class="hero-headline">Rate. Connect.<br>Discover.</h1>
+    <p class="hero-descriptor">The Social Diary for Live Dance Music.</p>
+    <a href="mailto:info@getnoiz.com?subject=Early%20Access%20Request" class="hero-cta">
+      <span class="cta-text">Get Early Access</span>
+      <span class="cta-arrow" aria-hidden="true">
+        <svg width="34" height="16" viewBox="0 0 34 16" fill="none">
+          <path d="M1 8H29" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M22 2L30 8L22 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
+
+    <div class="scroll-hint">
+      <svg class="scroll-chev" viewBox="0 0 14 8" fill="none"><polyline points="1,1 7,7 13,1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="scroll-chev" viewBox="0 0 14 8" fill="none"><polyline points="1,1 7,7 13,1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="scroll-chev" viewBox="0 0 14 8" fill="none"><polyline points="1,1 7,7 13,1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </section>
+
+  <!-- APP SHOWCASE -->
+  <section class="showcase">
+    <p class="section-tag reveal delay-1">The App</p>
+    <h2 class="showcase-headline reveal delay-2">For those<br>who know.</h2>
+    <div class="phones">
+      <div class="phone-wrap primary reveal delay-3">
+        <img src="./REAL_MOCKUP.png" alt="Discover">
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 Noiz. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <span class="footer-sep">|</span>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('in-view');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // CTA arrow tracks cursor/touch — swipe right to unlock email
+    const cta = document.querySelector('.hero-cta');
+    const ctaArrow = cta.querySelector('.cta-arrow');
+    let triggered = false;
+
+    function moveArrow(clientX) {
+      const rect = cta.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, x / rect.width));
+      const offset = (ratio - 0.5) * rect.width * 0.88;
+      ctaArrow.style.transform = `translate(-50%, -50%) translateX(${offset}px)`;
+
+      if (ratio >= 0.82 && !triggered) {
+        triggered = true;
+        window.location.href = 'mailto:info@getnoiz.com?subject=Early%20Access%20Request';
+      }
+    }
+
+    cta.addEventListener('mouseenter', e => {
+      triggered = false;
+      ctaArrow.style.opacity = '1';
+      moveArrow(e.clientX);
+    });
+    cta.addEventListener('mousemove', e => moveArrow(e.clientX));
+    cta.addEventListener('mouseleave', () => {
+      ctaArrow.style.opacity = '0';
+      triggered = false;
+    });
+
+    cta.addEventListener('touchstart', e => {
+      triggered = false;
+      ctaArrow.style.opacity = '1';
+      moveArrow(e.touches[0].clientX);
+    }, { passive: true });
+    cta.addEventListener('touchmove', e => moveArrow(e.touches[0].clientX), { passive: true });
+    cta.addEventListener('touchend', () => {
+      ctaArrow.style.opacity = '0';
+      triggered = false;
+    }, { passive: true });
+  </script>
+</body>
+</html>

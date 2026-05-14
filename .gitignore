@@ -1,0 +1,10 @@
+node_modules
+temporary screenshots
+*.pdf
+CLAUDE*
+noiz-existing-site-analysis.md
+noiz-website-builder.md
+.DS_Store
+*.mjs
+package.json
+package-lock.json

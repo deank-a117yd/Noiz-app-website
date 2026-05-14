@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOIZ — Terms of Service</title>
+  <style>
+    @font-face {
+      font-family: 'Archivo Black';
+      src: url('./Fonts/Hero-Archivo-Black.ttf') format('truetype');
+      font-weight: 900;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Archivo';
+      src: url('./Fonts/Archivo-SemiBold.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Archivo';
+      src: url('./Fonts/Archivo-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #0D0618;
+      --bg-purple: #38155C;
+      --accent: #FDDA5C;
+      --text: #FFFFFF;
+      --text-dim: rgba(255, 255, 255, 0.6);
+      --text-muted: rgba(255, 255, 255, 0.3);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Archivo', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.035;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 52px;
+      background: rgba(13, 6, 24, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .nav-logo {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 44px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.22s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.22s ease;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── PAGE BG ── */
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 45% 40% at 70% 25%, rgba(56, 21, 92, 0.28) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 30% at 25% 75%, rgba(56, 21, 92, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      padding-top: 130px;
+      padding-bottom: 100px;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 48px;
+      width: 100%;
+    }
+
+    /* ── HEADER ── */
+    .page-headline {
+      font-family: 'Archivo Black', sans-serif;
+      font-weight: 900;
+      font-size: clamp(44px, 7vw, 68px);
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) 0.18s forwards;
+    }
+
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.3s forwards;
+    }
+
+    .section-rule {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.42s forwards;
+    }
+
+    /* ── SECTIONS ── */
+    .doc-section {
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: fadeUp 0.6s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+    }
+
+    .doc-section:nth-child(1) { animation-delay: 0.5s; }
+    .doc-section:nth-child(2) { animation-delay: 0.58s; }
+    .doc-section:nth-child(3) { animation-delay: 0.66s; }
+    .doc-section:nth-child(4) { animation-delay: 0.74s; }
+
+    .section-number {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'Archivo Black', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .section-body {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 36px 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    .footer-legal {
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-legal a {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.2s ease;
+    }
+
+    .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+    .footer-sep {
+      color: rgba(255,255,255,0.12);
+      margin: 0 14px;
+      font-size: 12px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 28px; }
+      .container { padding: 0 24px; }
+      footer { padding: 28px 24px; flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-bg"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html">
+      <img class="nav-logo" src="./Noiz Horizontal Yellow@300x (3).png" alt="NOIZ">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <div class="container">
+      <h1 class="page-headline">Terms of Service</h1>
+      <div class="divider"></div>
+
+      <div class="section-rule"></div>
+
+      <div class="doc-sections">
+
+        <div class="doc-section">
+          <p class="section-number">01</p>
+          <h2 class="section-title">Acceptance of Terms</h2>
+          <p class="section-body">By accessing or using Noiz, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site or the mobile application.</p>
+        </div>
+
+        <div class="doc-section">
+          <p class="section-number">02</p>
+          <h2 class="section-title">User Conduct &amp; Content</h2>
+          <p class="section-body">You are responsible for the content you post and your interactions with other users. Noiz reserves the right to remove any content that violates community standards, including but not limited to harassment, hate speech, or fraudulent event ratings. Users must be at least 13 years of age to connect on the platform.</p>
+        </div>
+
+        <div class="doc-section">
+          <p class="section-number">03</p>
+          <h2 class="section-title">Privacy &amp; Data Protection</h2>
+          <p class="section-body">Our Privacy Policy describes how we handle the information you provide to us when you use our services. You understand that through your use of the services you consent to the collection and use of this information, including the transfer to our servers for storage and processing.</p>
+        </div>
+
+        <div class="doc-section">
+          <p class="section-number">04</p>
+          <h2 class="section-title">Limitation of Liability</h2>
+          <p class="section-body">In no event shall Noiz or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Noiz's application, even if Noiz or an authorized representative has been notified orally or in writing of the possibility of such damage.</p>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 Noiz. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <span class="footer-sep">|</span>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+  </footer>
+
+</body>
+</html>
