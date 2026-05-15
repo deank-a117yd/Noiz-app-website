@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#0D0618">
   <title>NOIZ — Rate. Connect. Discover.</title>
@@ -75,17 +75,6 @@
     }
 
     /* ── NAV ── */
-    .nav-bumper {
-      position: fixed;
-      top: -200px;
-      left: 0;
-      right: 0;
-      height: 200px;
-      background: var(--bg-deep);
-      z-index: 999;
-      pointer-events: none;
-    }
-
     nav {
       position: sticky;
       top: 0;
@@ -96,8 +85,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: calc(18px + constant(safe-area-inset-top)) 52px 18px;
-      padding: calc(18px + env(safe-area-inset-top)) 52px 18px;
+      padding: 18px 52px;
       background: rgba(13, 6, 24, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -488,7 +476,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: calc(16px + constant(safe-area-inset-top)) 24px 16px; padding: calc(16px + env(safe-area-inset-top)) 24px 16px; }
+      nav { padding: 16px 24px; }
       .nav-links { gap: 28px; }
 
       .hero-headline { font-size: clamp(44px, 13vw, 72px); }
@@ -529,8 +517,6 @@
   </style>
 </head>
 <body>
-
-  <div class="nav-bumper" aria-hidden="true"></div>
 
   <!-- NAV -->
   <nav>
