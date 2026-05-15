@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#0D0618">
   <title>NOIZ — Terms of Service</title>
@@ -78,19 +78,22 @@
 
     /* ── NAV ── */
     nav {
-      position: sticky;
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
       width: 100%;
-      z-index: 1000;
+      z-index: 99999;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 52px;
+      padding: calc(18px + env(safe-area-inset-top)) 52px 18px;
       background: rgba(13, 6, 24, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
+      isolation: isolate;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
 
     .nav-logo {
@@ -149,7 +152,7 @@
     /* ── MAIN ── */
     main {
       flex: 1;
-      padding-top: 130px;
+      padding-top: calc(130px + env(safe-area-inset-top));
       padding-bottom: 100px;
     }
 
@@ -282,7 +285,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
+      nav { padding: calc(16px + env(safe-area-inset-top)) 24px 16px; }
       .nav-links { gap: 28px; }
       .container { padding: 0 24px; }
       footer { padding: 28px 24px; flex-direction: column; align-items: center; text-align: center; }
